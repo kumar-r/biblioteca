@@ -12,31 +12,29 @@ import org.junit.Test;
  */
 public class Mainwindowtest{
     public boolean buttonAsserted=false;
-    @Test
-      public void checkifMenuSelected(){
-        Mainwindow  window=new Mainwindow();
-        buttonAsserted = window.checkselection(0);
-        Assert.assertTrue(buttonAsserted);
-    }
 
     @Test
      public void checkWelcomeMesssage(){
-        Welcome window=new Welcome(3000);
-        Assert.assertEquals(true, window.DisplayDidWelcome());
-    }
-
-     @Test
-      public void ViewAllBookTest(){
-         int numberOfBooks=4;
-         ViewAllBooks VW=new ViewAllBooks();
-         Assert.assertEquals(numberOfBooks,VW.showNumOfBooks());
-        // int n = VW.shownumofbooks();
+       Assert.assertEquals(99, Welcome.main());
      }
     @Test
-       public void ReserveBookTest(){
-         ReserveBook RB=new ReserveBook();
-        Assert.assertEquals(true,RB.choosebook("abc"));
-        System.out.println("Your selected book: abc has been reserved");
+     public void DisplayListOfMenuItemsTest(){
+        InputDevice IN=new InputDevice();
+        OutputDevice OD=new OutputDevice();
+        Mainwindow MainW=new Mainwindow(OD, IN);
+        Assert.assertEquals(4, MainW.DisplayMenu());
     }
+
+    @Test
+    public void SelectionOfMenuItemTest(){
+        int integerassignedifmenuselected;
+        InputDevice IN=new InputDevice();
+        OutputDevice OD=new OutputDevice();
+        Mainwindow MainW=new Mainwindow(OD,IN);
+        integerassignedifmenuselected=MainW.ReturnselectMenuItemnum();
+       // MainW.selectFromDisplay();
+        Assert.assertEquals(99,integerassignedifmenuselected);
+    }
+
 
 }

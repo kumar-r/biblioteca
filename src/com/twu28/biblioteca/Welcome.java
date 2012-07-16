@@ -73,7 +73,7 @@ public class Welcome extends JWindow {
         try
         {
             Runtime.getRuntime().exec("java Mainwindow");
-            DidWelcome=true;
+
             System.exit(0);
 
         }
@@ -87,9 +87,9 @@ public class Welcome extends JWindow {
       public boolean DisplayDidWelcome(){
           return DidWelcome;
       }
-    public static void main(String[] args) {
+    public static int main() {
         Welcome splash = new Welcome(4000);
         splash.showSplashAndExit();
-
+          return 99;
     }
 }

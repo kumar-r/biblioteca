@@ -1,7 +1,5 @@
 package com.twu28.biblioteca;
 
-import java.util.List;
-
 /**
  * Created with IntelliJ IDEA.
  * User: HP
@@ -10,84 +8,88 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class Mainwindow {
-    private final OutputDevice outputit;
-    private final InputDevice inputit;
-     private int selectedMenuItem;
+    static  OutputDevice outputit=new OutputDevice();
+    static InputDevice inputit=new InputDevice();
+    private static UserDatabase UD=new UserDatabase();
+    int selectedMenuItem;
+    //private static BookCollection bookC=new BookCollection();
 
 
-    public Mainwindow(OutputDevice outputit, InputDevice inputit) {
-       this.inputit=inputit;
-        this.outputit=outputit;
-        selectedMenuItem=99;
+    public static void main(String[] args){
+      Mainwindow Main=new Mainwindow();
+      Main.ShowWelcomeScreen();
+      //outputit.output("enter your library ID\n");
+      //int libnum= inputit.readint();
+
+      Main.selectFromDisplay();
     }
-    // public Mainwindow(){}
-    public int DisplayMenu() {
-            String[] menuItems = new BibliotecaReserve().menuItems().toArray(new String[]{});
-            String output = "";
-            for (int i = 0; i < menuItems.length; i++) {
-                String menuItem = menuItems[i];
-                output += (i + 1) + "." + menuItem + "\n";
-            }
-            output += "Select Menu Item:\t";
 
-            outputit.output(output);
-             return menuItems.length;
-        }
+    public int DisplayListOfMenuOptions(OutputDevice outputdevice) {
+        UsermenuOption UMO=new UsermenuOption();
+        UMO.displayMenuOptions(outputdevice);
+        return 99;
+    }
 
-
-
-    public int selectFromDisplay() {
+    public void ShowWelcomeScreen() {
+        Welcome splash = new Welcome(4000);
+        System.out.println("WelCome To Biblioteca");
+        splash.showSplashAndExit();
+        //System.out.println("Welcome to BIBLIOTECA");
+    }
+    public void selectFromDisplay() {
 
             while (true) {
-                DisplayMenu();
+
+                 DisplayListOfMenuOptions(outputit);
                  selectedMenuItem = inputit.readint();
-
-
                 if (selectedMenuItem == 1) {
-                    String[] books = new BibliotecaReserve().allBooks().toArray(new String[]{});
+                    BookCollection bookCollection = new BookCollection();
                     String output = "List of all the Books:\n";
-                    for (int i = 0; i < books.length; i++) {
-                        String book = books[i];
+                    for (int i = 0; i < bookCollection.books.size(); i++) {
+                        String book = bookCollection.books.get(i).bookName;
                         output += (i + 1) + "." + book + "\n";
                     }
                     output += "\n";
                     outputit.output(output);
                 }
                 else if (selectedMenuItem==2){
+                    boolean bookexists=false;
                     outputit.output("Please Enter the name of the book to reserve:\t");
+
                     String bookName=inputit.readInput();
-                    List<String> books=new BibliotecaReserve().allBooks();
-                    if(books.contains(bookName))
+                    BookCollection bookCollection = new BookCollection();
+                   for(int i=0;i<bookCollection.books.size();i++){
+                    if(bookCollection.books.get(i).bookName==bookName)
+                          bookexists=true;
+                    }
+
+                      if(bookexists==true)
                         outputit.output("Thank You! Enjoy the book.\n");
                     else
-                        outputit.output("Sorry we don't have that book yet");
+                       outputit.output("Sorry we don't have that book yet");
                 }
 
+
                 else if(selectedMenuItem==3){
+
+                    outputit.output("SORRY!!!this feature will be implemented soon.\n");
+                }
+                else if(selectedMenuItem==4){
 
                         outputit.output("Please talk to Librarian.\nThank you.\n");
                 }
 
-                else if (selectedMenuItem == 4) {
-                    outputit.output("Come Back Again Biblioteca.\n...Thank you...\n");
-                    break;
+                else if (selectedMenuItem ==5) {
+                    outputit.output("Come Back Again to Biblioteca.\n...Thank you...\n");
+                    System.exit(0);
                 }
 
                 else
                     outputit.output("Select a valid option!!!\n1");
-
-
             }
-           return 1;
+
         }
 
-    public static void main(String args[]){
-        new Mainwindow(new OutputDevice(), new InputDevice()).selectFromDisplay();
-    }
-
-    public int ReturnselectMenuItemnum() {
-       return this.selectedMenuItem;  //To change body of created methods use File | Settings | File Templates.
-    }
 }
 
 

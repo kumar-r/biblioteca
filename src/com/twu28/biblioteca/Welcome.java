@@ -67,14 +67,12 @@ public class Welcome extends JWindow {
 
     }
 
-    public void showSplashAndExit() {
+    public int showSplashAndExit() {
 
         showSplash();
         try
         {
             Runtime.getRuntime().exec("java Mainwindow");
-
-            System.exit(0);
 
         }
         catch(Exception e)
@@ -82,14 +80,13 @@ public class Welcome extends JWindow {
             System.out.println("Error creating the FileInfo panel: " +e);
             e.printStackTrace();
         }
-
+        return 99;
     }
-      public boolean DisplayDidWelcome(){
-          return DidWelcome;
-      }
-    public static int main() {
+
+   /* public static int main() {
         Welcome splash = new Welcome(4000);
         splash.showSplashAndExit();
-          return 99;
+         return 99;
     }
+     */
 }

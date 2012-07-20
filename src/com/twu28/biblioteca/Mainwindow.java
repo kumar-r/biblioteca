@@ -10,17 +10,15 @@ package com.twu28.biblioteca;
 public class Mainwindow {
     static  OutputDevice outputit=new OutputDevice();
     static InputDevice inputit=new InputDevice();
-    private static UserDatabase UD=new UserDatabase();
+    static UserDatabase UDB=new UserDatabase();
     int selectedMenuItem;
-    //private static BookCollection bookC=new BookCollection();
-
+    static User user=new User();
+    int index=-1;
+    boolean login=false;
 
     public static void main(String[] args){
       Mainwindow Main=new Mainwindow();
       Main.ShowWelcomeScreen();
-      //outputit.output("enter your library ID\n");
-      //int libnum= inputit.readint();
-
       Main.selectFromDisplay();
     }
 
@@ -30,19 +28,25 @@ public class Mainwindow {
         return 99;
     }
 
-    public void ShowWelcomeScreen() {
-        Welcome splash = new Welcome(4000);
+    public boolean ShowWelcomeScreen() {
+       Welcome splash = new Welcome(4000);
         System.out.println("WelCome To Biblioteca");
-        splash.showSplashAndExit();
-        //System.out.println("Welcome to BIBLIOTECA");
+        try{
+            splash.showSplashAndExit();
+        }
+        catch (RuntimeException ie){
+            System.out.println("Some error in Running Graphical interface"+ ie);
+        }
+          return true;
     }
     public void selectFromDisplay() {
+        int libraryid;
 
             while (true) {
 
                  DisplayListOfMenuOptions(outputit);
-                 selectedMenuItem = inputit.readint();
-                if (selectedMenuItem == 1) {
+                 selectedMenuItem = user.SelectMenuOption();
+                 if (selectedMenuItem == 1) {
                     BookCollection bookCollection = new BookCollection();
                     String output = "List of all the Books:\n";
                     for (int i = 0; i < bookCollection.books.size(); i++) {
@@ -55,29 +59,61 @@ public class Mainwindow {
                 else if (selectedMenuItem==2){
                     boolean bookexists=false;
                     outputit.output("Please Enter the name of the book to reserve:\t");
-
-                    String bookName=inputit.readInput();
-                    BookCollection bookCollection = new BookCollection();
-                   for(int i=0;i<bookCollection.books.size();i++){
-                    if(bookCollection.books.get(i).bookName==bookName)
-                          bookexists=true;
-                    }
-
-                      if(bookexists==true)
+                     String bookName=inputit.readInput().toString();
+                     System.out.println(bookName);
+                     BookCollection bookCollection = new BookCollection();
+                     bookexists=bookCollection.IsBookAvailable(bookName);
+                    if(bookexists){
+                        user.SetEnteredBookAsBookReserved(bookName);
                         outputit.output("Thank You! Enjoy the book.\n");
+                      }
                     else
-                       outputit.output("Sorry we don't have that book yet");
+                       outputit.output("Sorry we don't have that book yet.");
                 }
 
 
                 else if(selectedMenuItem==3){
+                   // outputit.output("enter you library-Id to return the book");
+                    if(user.ReturnReservedBook())
+                        outputit.output("Thank You: Your Book has been returned Successfully");
 
-                    outputit.output("SORRY!!!this feature will be implemented soon.\n");
+                     else
+                        outputit.output("Sorry: You don't have any Reserved Book to return");
                 }
                 else if(selectedMenuItem==4){
 
                         outputit.output("Please talk to Librarian.\nThank you.\n");
                 }
+                 else if(selectedMenuItem==5){
+
+                     if(index==-1){
+                     outputit.output("you should be logged in to view list of movies");
+                     outputit.output("enter your library-Id to login");
+
+                     libraryid=inputit.readint();
+                      for(int i=0;i<UDB.users.size();i++){
+                          if(libraryid==UDB.users.get(i).getlibId()){
+                              login=true;
+                              UDB.users.get(i).setLoggedin(login);
+                              index=i+1;
+                          }
+                      }
+
+                     }
+                      else{
+                             outputit.output("you are logged in.");
+                         }
+
+                     if(login){
+                         System.out.println("user index is: "+index+"\n");
+                              MovieCollection movieCollection=new MovieCollection();
+                              movieCollection.DisplayListOfMovies(outputit);
+                     }
+
+                     else
+                           outputit.output("your are not a member: SORRY!!!!");
+
+                 }
 
                 else if (selectedMenuItem ==5) {
                     outputit.output("Come Back Again to Biblioteca.\n...Thank you...\n");
@@ -90,6 +126,6 @@ public class Mainwindow {
 
         }
 
-}
 
+}
 

@@ -10,11 +10,12 @@ package com.twu28.biblioteca;
 public class UsermenuOption {
 
     public void displayMenuOptions(OutputDevice outputit){    //user menu options a new menu can be added anytime
-        outputit.output("View All Books");
-        outputit.output("Reserve Your Book");
-        outputit.output("Return Book");
-        outputit.output("Check your Library number");
-        outputit.output("Exit");
+        outputit.output("1. View All Books");
+        outputit.output("2. Reserve Your Book");
+        outputit.output("3. Return Book");
+        outputit.output("4. Check your Library number");
+        outputit.output("5. View All Movies");
+        outputit.output("6. Exit");
 
     }
 }

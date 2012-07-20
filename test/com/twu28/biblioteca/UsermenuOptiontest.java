@@ -12,9 +12,16 @@ import junit.framework.TestCase;
  */
 public class UsermenuOptiontest extends TestCase {
     OutputDevice outputTestDevice=new OutputDevice();
+
     public void TestIfMenuIsDisplayed(){
-    Mainwindow MW=new Mainwindow();
-    Assert.assertEquals(99,MW.DisplayListOfMenuOptions(outputTestDevice));
- }
+        User user=new User();
+        Assert.assertEquals(3,user.SelectMenuOption());
+    }
+   public void  BookAvailabilityTest(){
+       BookCollection bookCollection=new BookCollection();
+       String book="abc";
+       Assert.assertTrue(bookCollection.IsBookAvailable(book));
+   }
+
 
 }

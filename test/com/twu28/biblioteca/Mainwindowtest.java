@@ -1,6 +1,6 @@
 package com.twu28.biblioteca;
 
-//import junit.framework.Assert;
+
 import junit.framework.TestCase;
 import org.junit.Assert;
 
@@ -12,8 +12,13 @@ import org.junit.Assert;
  * To change this template use File | Settings | File Templates.
  */
 public class MainwindowTest extends TestCase {
-    public void TestIfSelectionIsValid(){
+    OutputDevice OD=new OutputDevice();
+    public void WelcomeTest(){
     Mainwindow Mw=new Mainwindow();
-    Assert.assertEquals("",Mw.selectedMenuItem);
+    Assert.assertTrue(Mw.ShowWelcomeScreen());
   }
+    public void ListofMenuItemsTest(){
+        Mainwindow Mw=new Mainwindow();
+        Assert.assertEquals(99,Mw.DisplayListOfMenuOptions(OD));
+    }
 }

@@ -12,13 +12,13 @@ public class Book {
     public String bookName;
     public String publisher;
     public String author;
-    boolean IsReserved;
+
 
     public Book(int BookId,String bookName, String Publisher,String author){
         this.BookId=BookId;
         this.bookName=bookName;
         this.publisher=Publisher;
         this.author=author;
-        this.IsReserved=false;
+
     }
 }

@@ -25,4 +25,13 @@ public class BookCollection {
             books.add(new Book(9,"A Painted House","John Grisham","Dell"));
             books.add(new Book(10,"Sherlock Holmes","Sir Arthur Conan Doyle","Benton Classics"));
         }
+        public boolean IsBookAvailable(String bookName){
+            for(int i=0;i<books.size();i++){
+                if(books.get(i).bookName==bookName)
+                    return true;
+                else
+                    return false;
+        }
+         return false;
     }
+}

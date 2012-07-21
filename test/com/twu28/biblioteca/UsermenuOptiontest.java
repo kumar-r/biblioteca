@@ -1,7 +1,7 @@
 package com.twu28.biblioteca;
 
 import junit.framework.Assert;
-import junit.framework.TestCase;
+import org.junit.Test;
 
 /**
  * Created with IntelliJ IDEA.
@@ -10,18 +10,30 @@ import junit.framework.TestCase;
  * Time: 12:14 AM
  * To change this template use File | Settings | File Templates.
  */
-public class UsermenuOptiontest extends TestCase {
+public class UsermenuOptiontest {
     OutputDevice outputTestDevice=new OutputDevice();
+    BookCollection bookCollection=new BookCollection();
 
-    public void TestIfMenuIsDisplayed(){
-        User user=new User();
-        Assert.assertEquals(3,user.SelectMenuOption());
+    @Test
+    public void DisplayListOfBookTest(){
+
+        Assert.assertTrue(bookCollection.DisplayListOfBooks(outputTestDevice));
     }
-   public void  BookAvailabilityTest(){
-       BookCollection bookCollection=new BookCollection();
-       String book="abc";
-       Assert.assertTrue(bookCollection.IsBookAvailable(book));
+    @Test
+   public void BookAvailabilityTest(){
+       int bookid=4;
+       Assert.assertTrue(bookCollection.IsBookAvailable(bookid));
+
    }
-
-
+     @Test
+    public void LibIdExistsTest(){
+         User user=new User();
+         Assert.assertTrue(user.CheckLibNumber(1000));
+     }
+    @Test
+    public void ReturnReservedBookTest(){
+        User user=new User();
+        user.SetEnteredBookAsBookReserved(5,bookCollection);
+        Assert.assertTrue(user.ReturnReservedBook());
+    }
 }

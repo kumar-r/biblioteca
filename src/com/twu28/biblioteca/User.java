@@ -11,7 +11,7 @@ public class User{
    private int libId;
    private String userName;
    InputDevice inputdevice=new InputDevice();
-   String BookReserved;
+   int IdofBookReserved;
    boolean HasReserved;
 
   private boolean loggedin;
@@ -44,31 +44,31 @@ public class User{
         return (inputdevice.readint());
 
     }
-    public String EnterBooknameToReserve(InputDevice inputit){
-        String Booktores=inputit.readInput();
-         return Booktores;
-    }
-   /* public boolean CheckLibNumber(int libnum){
+
+    public boolean CheckLibNumber(int libnum){
         UserDatabase UDB=new UserDatabase();
+        boolean IdAvailable=false;
         for(int i=0;i<UDB.users.size();i++){
             if(UDB.users.get(i).libId==libnum)
-                return true;
-            else
-                return false;
-        }
-        return false;
-    }
-     */
+                IdAvailable=true;
 
-    public void SetEnteredBookAsBookReserved(String bookName) {
-        this.BookReserved=bookName;
+        } return IdAvailable;
+    }
+
+
+    public void SetEnteredBookAsBookReserved(int bookId,BookCollection bookC) {
+        int index=bookId-1;
+        this.IdofBookReserved=(index);
+
+        bookC.books.get(index).setIsReserved(true);
+       HasReserved=true;
    }
 
     public boolean ReturnReservedBook() {
         if(HasReserved){
-            BookReserved="";
+            IdofBookReserved=0;
             HasReserved=false;
-         return true;
+            return true;
         }
         else
             return false;

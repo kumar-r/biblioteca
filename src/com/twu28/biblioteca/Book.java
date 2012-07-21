@@ -12,6 +12,7 @@ public class Book {
     public String bookName;
     public String publisher;
     public String author;
+    private boolean IsReserved;
 
 
     public Book(int BookId,String bookName, String Publisher,String author){
@@ -20,5 +21,11 @@ public class Book {
         this.publisher=Publisher;
         this.author=author;
 
+    }
+    public boolean getIsReserved(){
+        return IsReserved;
+    }
+    public void setIsReserved(boolean value){
+        this.IsReserved=value;
     }
 }

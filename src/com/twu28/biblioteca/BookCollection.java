@@ -25,13 +25,24 @@ public class BookCollection {
             books.add(new Book(9,"A Painted House","John Grisham","Dell"));
             books.add(new Book(10,"Sherlock Holmes","Sir Arthur Conan Doyle","Benton Classics"));
         }
-        public boolean IsBookAvailable(String bookName){
-            for(int i=0;i<books.size();i++){
-                if(books.get(i).bookName==bookName)
-                    return true;
-                else
-                    return false;
+        public boolean IsBookAvailable(int BookId){
+           boolean found=false;
+           int index=BookId-1;
+           for(int i=0;i<this.books.size();i++){
+                if((this.books.get(i).BookId==index)&&(!books.get(i).getIsReserved())){
+                    found=true;
+                }
         }
-         return false;
+            return found;
+      }
+    public boolean DisplayListOfBooks(OutputDevice OD) {
+        String output="list of all books:\n";
+        for (int i = 0; i < books.size(); i++) {
+            String book = books.get(i).bookName;
+            output += (i + 1) + "." + book +"\n";
+        }
+        output += "\n";
+        OD.output(output);
+       return true;
     }
 }

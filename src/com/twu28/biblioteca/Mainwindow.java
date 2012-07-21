@@ -11,6 +11,7 @@ public class Mainwindow {
     static  OutputDevice outputit=new OutputDevice();
     static InputDevice inputit=new InputDevice();
     static UserDatabase UDB=new UserDatabase();
+    BookCollection bookCollection = new BookCollection();
     int selectedMenuItem;
     static User user=new User();
     int index=-1;
@@ -47,24 +48,17 @@ public class Mainwindow {
                  DisplayListOfMenuOptions(outputit);
                  selectedMenuItem = user.SelectMenuOption();
                  if (selectedMenuItem == 1) {
-                    BookCollection bookCollection = new BookCollection();
-                    String output = "List of all the Books:\n";
-                    for (int i = 0; i < bookCollection.books.size(); i++) {
-                        String book = bookCollection.books.get(i).bookName;
-                        output += (i + 1) + "." + book + "\n";
-                    }
-                    output += "\n";
-                    outputit.output(output);
+                   bookCollection.DisplayListOfBooks(outputit);
                 }
                 else if (selectedMenuItem==2){
                     boolean bookexists=false;
-                    outputit.output("Please Enter the name of the book to reserve:\t");
-                     String bookName=inputit.readInput().toString();
-                     System.out.println(bookName);
-                     BookCollection bookCollection = new BookCollection();
-                     bookexists=bookCollection.IsBookAvailable(bookName);
+                    outputit.output("Please Enter the ID of the book to reserve:\t");
+                     int bookId= inputit.readint();
+
+                     System.out.println(bookId);
+                     bookexists=bookCollection.IsBookAvailable(bookId);
                     if(bookexists){
-                        user.SetEnteredBookAsBookReserved(bookName);
+                        user.SetEnteredBookAsBookReserved(bookId,bookCollection);
                         outputit.output("Thank You! Enjoy the book.\n");
                       }
                     else
@@ -73,8 +67,7 @@ public class Mainwindow {
 
 
                 else if(selectedMenuItem==3){
-                   // outputit.output("enter you library-Id to return the book");
-                    if(user.ReturnReservedBook())
+                  if(user.ReturnReservedBook())
                         outputit.output("Thank You: Your Book has been returned Successfully");
 
                      else
@@ -115,7 +108,7 @@ public class Mainwindow {
 
                  }
 
-                else if (selectedMenuItem ==5) {
+                else if (selectedMenuItem ==6) {
                     outputit.output("Come Back Again to Biblioteca.\n...Thank you...\n");
                     System.exit(0);
                 }
@@ -125,7 +118,6 @@ public class Mainwindow {
             }
 
         }
-
 
 }
 

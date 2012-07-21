@@ -67,7 +67,7 @@ public class Welcome extends JWindow {
 
     }
 
-    public int showSplashAndExit() {
+    public void showSplashAndExit() {
 
         showSplash();
         try
@@ -80,7 +80,7 @@ public class Welcome extends JWindow {
             System.out.println("Error creating the FileInfo panel: " +e);
             e.printStackTrace();
         }
-        return 99;
+
     }
 
    /* public static int main() {

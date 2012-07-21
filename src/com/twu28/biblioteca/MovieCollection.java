@@ -16,14 +16,8 @@ public class MovieCollection {
         movies.add(new Movie("Million dollar baby","Clint Eastwood",10));
         movies.add(new Movie("How to train your Dragon","Dean DeBlois",8));
         movies.add(new Movie("Sholay","Ramesh sippy",9));
-     /* movies.add(new Movie(4,"A Thousand Splendid Suns","Khaleid Hosseini","Bloomsbury"));
-        movies.add(new Movie(5,"Troublesome Words","Bill Bryson","Penguin"));
-        movies.add(new Movie(6,"Gone with the wind","Margaret Mitchell","KRJ"));
-        movies.add(new Movie(7,"The complete Reference Java","Herbert Schildt","McGraw Hill"));
-        movies.add(new Movie(8,"Database systems","Elmasri Navathe","Pearson"));
-        movies.add(new Movie(9,"A Painted House","John Grisham","Dell"));
-        movies.add(new Movie(10,"Sherlock Holmes","Sir Arthur Conan Doyle","Benton Classics"));
-       */
+        movies.add(new Movie("The Dark Knight Rises","Cristopher Nolan",10));
+        movies.add(new Movie("A beautiful Mind","Ron Howard",8));
     }
 
     public void DisplayListOfMovies(OutputDevice OD) {

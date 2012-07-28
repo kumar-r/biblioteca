@@ -20,16 +20,30 @@ public class MovieCollection {
         movies.add(new Movie("A beautiful Mind","Ron Howard",8));
     }
 
-    public void DisplayListOfMovies(OutputDevice OD) {
-        String output="list of all movies:\n";
-        for (int i = 0; i < movies.size(); i++) {
-            String movie = movies.get(i).movieName;
-            String director=movies.get(i).director;
-            int rating=movies.get(i).rating;
-            output += (i + 1) + "." + movie +"\t"+ director+"\t"+rating+"\n";
+    public boolean AddMovieToCollection(String movieName, String Director, int rating)throws IndexOutOfBoundsException{
+       try{
+        movies.add(new Movie(movieName,Director,rating));
+       }catch(IndexOutOfBoundsException e){
+           System.out.println("List is Full now: please add later" );
+       }
+        return true;
+    }
+    public boolean RemoveMovie(String moviename){
+        int index;
+        boolean foundMovieToRemove=false;
+        for(int i=0;i<movies.size();i++)
+        {
+            if(moviename == movies.get(i).getMovieName())
+                index=i;
+            foundMovieToRemove=true;
         }
-        output += "\n";
-        OD.output(output);
 
+        if(foundMovieToRemove){
+              //books.get(index).                    //delete element from list
+              System.out.println("Movie deleted successfully");
+        }
+        else
+        System.out.println("ERROR:");
+        return foundMovieToRemove;
     }
 }

@@ -8,9 +8,9 @@ package com.twu28.biblioteca;
  * To change this template use File | Settings | File Templates.
  */
 public class Movie {
-    public String movieName;
-    public String director;
-    public int rating;
+    private String movieName;
+    private String director;
+    private int rating;
 
 
     public Movie(String moviName, String director,int rating){
@@ -19,5 +19,13 @@ public class Movie {
         this.rating=rating;
 
     }
-
+    public String getMovieName(){
+        return movieName;
+    }
+    public String getDirector(){
+        return director;
+    }
+    public int getRating(){
+        return rating;
+    }
 }

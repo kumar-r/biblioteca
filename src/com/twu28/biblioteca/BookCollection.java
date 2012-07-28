@@ -10,10 +10,10 @@ import java.util.List;
  * Time: 7:18 PM
  * To change this template use File | Settings | File Templates.
  */
-public class BookCollection {
+public class BookCollection{ //a repository layer class with the methods for addition and deletion.
 
         List<Book> books = new ArrayList<Book>();
-        public BookCollection(){
+    public BookCollection(){
             books.add(new Book(1,"Harry Potter and the Philosophers Stone","J.K. rowling","Bloomsbury"));
             books.add(new Book(2,"Pride and Prejudice","Jane Austen","Whitehall"));
             books.add(new Book(3,"The Immortals of Meluha","Amish","Tara Press"));
@@ -25,24 +25,32 @@ public class BookCollection {
             books.add(new Book(9,"A Painted House","John Grisham","Dell"));
             books.add(new Book(10,"Sherlock Holmes","Sir Arthur Conan Doyle","Benton Classics"));
         }
-        public boolean IsBookAvailable(int BookId){
-           boolean found=false;
-           int index=BookId-1;
-           for(int i=0;i<this.books.size();i++){
-                if((this.books.get(i).BookId==index)&&(!books.get(i).getIsReserved())){
-                    found=true;
-                }
+
+    public boolean AddNewBook(int Id,String bookName,String Author, String publisher)
+            throws IndexOutOfBoundsException{
+        try{
+            books.add(new Book(Id,bookName,Author,publisher));
+        }catch (IndexOutOfBoundsException e){
+            System.out.println("Collection size full: please add later");
         }
-            return found;
-      }
-    public boolean DisplayListOfBooks(OutputDevice OD) {
-        String output="list of all books:\n";
-        for (int i = 0; i < books.size(); i++) {
-            String book = books.get(i).bookName;
-            output += (i + 1) + "." + book +"\n";
-        }
-        output += "\n";
-        OD.output(output);
-       return true;
+        return  true;
     }
+
+    public boolean RemoveBook(int Id)throws IndexOutOfBoundsException{
+        boolean foundBookToRemove=false;
+        try{
+            for(int i=0;i<books.size();i++)
+            {
+                if(Id == books.get(i).getBookId()){
+                    books.remove(i);
+                    foundBookToRemove=true;
+                }
+            }
+           }catch (IndexOutOfBoundsException e){
+            System.out.println("Exception arised: could not delete from list");
+        }
+
+    return foundBookToRemove;
+    }
+
 }

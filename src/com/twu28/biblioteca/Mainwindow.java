@@ -11,104 +11,70 @@ public class Mainwindow {
     static  OutputDevice outputit=new OutputDevice();
     static InputDevice inputit=new InputDevice();
     static UserDatabase UDB=new UserDatabase();
+    static Library library=new Library();
     BookCollection bookCollection = new BookCollection();
     int selectedMenuItem;
     static User user=new User();
     int index=-1;
-    boolean login=false;
 
     public static void main(String[] args){
       Mainwindow Main=new Mainwindow();
-      Main.ShowWelcomeScreen();
+      library.ShowWelcomeScreen();
       Main.selectFromDisplay();
     }
 
-    public int DisplayListOfMenuOptions(OutputDevice outputdevice) {
-        UsermenuOption UMO=new UsermenuOption();
-        UMO.displayMenuOptions(outputdevice);
-        return 99;
-    }
-
-    public boolean ShowWelcomeScreen() {
-       Welcome splash = new Welcome(4000);
-        System.out.println("WelCome To Biblioteca");
-        try{
-            splash.showSplashAndExit();
-        }
-        catch (RuntimeException ie){
-            System.out.println("Some error in Running Graphical interface"+ ie);
-        }
-          return true;
-    }
     public void selectFromDisplay() {
-        int libraryid;
-
             while (true) {
 
-                 DisplayListOfMenuOptions(outputit);
-                 selectedMenuItem = user.SelectMenuOption();
-                 if (selectedMenuItem == 1) {
-                   bookCollection.DisplayListOfBooks(outputit);
+                 library.DisplaymainMenu();
+                 selectedMenuItem = user.SelectMenuOption(inputit);
+                if (selectedMenuItem == 1) {
+                   library.ShowBooksInLibrary(bookCollection);
                 }
                 else if (selectedMenuItem==2){
-                    boolean bookexists=false;
                     outputit.output("Please Enter the ID of the book to reserve:\t");
-                     int bookId= inputit.readint();
-
-                     System.out.println(bookId);
-                     bookexists=bookCollection.IsBookAvailable(bookId);
-                    if(bookexists){
-                        user.SetEnteredBookAsBookReserved(bookId,bookCollection);
-                        outputit.output("Thank You! Enjoy the book.\n");
-                      }
-                    else
-                       outputit.output("Sorry we don't have that book yet.");
+                    int bookId= inputit.readint();
+                    System.out.println(bookId);
+                    library.reserveABookbyBookid(bookId,bookCollection,user);
                 }
-
-
                 else if(selectedMenuItem==3){
-                  if(user.ReturnReservedBook())
+                  if(user.ReturnReservedBook(bookCollection))
                         outputit.output("Thank You: Your Book has been returned Successfully");
-
-                     else
+                   else
                         outputit.output("Sorry: You don't have any Reserved Book to return");
                 }
                 else if(selectedMenuItem==4){
-
-                        outputit.output("Please talk to Librarian.\nThank you.\n");
+                        if(index!=-1)
+                               outputit.output("your library-Id is\t"+UDB.users.get(index).userLibraryId()+"\n");
+                        else
+                               outputit.output("Please talk to Librarian.\nThank you.\n");
                 }
-                 else if(selectedMenuItem==5){
-
+                else if(selectedMenuItem==5){
+                    MovieCollection movieCollection=new MovieCollection();
                      if(index==-1){
-                     outputit.output("you should be logged in to view list of movies");
-                     outputit.output("enter your library-Id to login");
-
-                     libraryid=inputit.readint();
-                      for(int i=0;i<UDB.users.size();i++){
-                          if(libraryid==UDB.users.get(i).getlibId()){
-                              login=true;
-                              UDB.users.get(i).setLoggedin(login);
-                              index=i+1;
-                          }
-                      }
-
-                     }
-                      else{
-                             outputit.output("you are logged in.");
+                         outputit.output("you should be logged in to view list of movies");
+                         outputit.output("enter your LIBRARY-ID to login");
+                         outputit.output("username:");
+                         int username=inputit.readint();
+                         outputit.output("password:");
+                         int password=inputit.readint();
+                         index=library.UserLogin(UDB,username,password);
+                         if(index==-1){
+                             outputit.output("Sorry: INcorrect username or password");
                          }
-
-                     if(login){
-                         System.out.println("user index is: "+index+"\n");
-                              MovieCollection movieCollection=new MovieCollection();
-                              movieCollection.DisplayListOfMovies(outputit);
+                         else{
+                             outputit.output("login successfull :)");
+                             library.ShowMoviesInLibrary(movieCollection);
+                         }
                      }
-
-                     else
-                           outputit.output("your are not a member: SORRY!!!!");
-
+                     else{
+                           outputit.output("you are already logged in.");
+                           System.out.println("user index is: "+(index+1)+"\n");
+                           library.ShowMoviesInLibrary(movieCollection);
+                     }
                  }
 
-                else if (selectedMenuItem ==6) {
+                else if (selectedMenuItem==6) {
                     outputit.output("Come Back Again to Biblioteca.\n...Thank you...\n");
                     System.exit(0);
                 }
@@ -117,7 +83,6 @@ public class Mainwindow {
                     outputit.output("Select a valid option!!!\n1");
             }
 
-        }
-
+    }
 }
 

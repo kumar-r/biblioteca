@@ -8,10 +8,10 @@ package com.twu28.biblioteca;
  * To change this template use File | Settings | File Templates.
  */
 public class Book {
-    int BookId;
-    public String bookName;
-    public String publisher;
-    public String author;
+    private int BookId;
+    private String bookName;
+    private String publisher;
+    private String author;
     private boolean IsReserved;
 
 
@@ -22,10 +22,27 @@ public class Book {
         this.author=author;
 
     }
-    public boolean getIsReserved(){
+    public String getBookName(){
+        return bookName;
+    }
+
+    public int getBookId(){
+        return BookId;
+    }
+    public void reserve(boolean value){
+        IsReserved=value;
+    }
+    public boolean ShowReservationStatus(){
         return IsReserved;
     }
-    public void setIsReserved(boolean value){
-        this.IsReserved=value;
+    public boolean IsBookAvailable(int bookId){
+        boolean found=false;
+        if((BookId==bookId)&&(!ShowReservationStatus())){
+                found=true;
+           }
+        return found;
+        }
+
     }
-}
+
+

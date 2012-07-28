@@ -8,70 +8,55 @@ package com.twu28.biblioteca;
  * To change this template use File | Settings | File Templates.
  */
 public class User{
-   private int libId;
-   private String userName;
-   InputDevice inputdevice=new InputDevice();
-   int IdofBookReserved;
+   private UserLibraryId userLibraryId=new UserLibraryId(); //UserLibraryId contains the username and password for the user-
+   int IdofBookReserved;                                    //-implemented in the form of class.
    boolean HasReserved;
+   private boolean loggedin;
 
-  private boolean loggedin;
-
-  public User(int libId,String userName){
-        this.libId=libId;
-        this.userName=userName;
+  public User(int userName, int pasword){
+        this.userLibraryId.setUsername(userName);
+        this.userLibraryId.setPassword(pasword);
     }
     public User(){}
 
-    public void setLibId(int userId){
-        this.libId=userId;
-    }
-    public int getlibId(){
-        return this.libId;
-    }
-    public void setUserName(String username){
-        this.userName=username;
-    }
-    public String getUsername(){
-        return this.userName;
-    }
     public void setLoggedin(boolean value){
         this.loggedin=value;
     }
+
     public boolean getLoggedin(){
         return this.loggedin;
     }
-    public int SelectMenuOption(){
+    public int userUsername(){
+        return userLibraryId.getUsername();
+    }
+    public int userPassword(){
+        return userLibraryId.getPassword();
+    }
+    public String userLibraryId(){
+        return userLibraryId.giveLibraryId();
+    }
+    public int SelectMenuOption(InputDevice inputdevice){
         return (inputdevice.readint());
-
-    }
-
-    public boolean CheckLibNumber(int libnum){
-        UserDatabase UDB=new UserDatabase();
-        boolean IdAvailable=false;
-        for(int i=0;i<UDB.users.size();i++){
-            if(UDB.users.get(i).libId==libnum)
-                IdAvailable=true;
-
-        } return IdAvailable;
     }
 
 
-    public void SetEnteredBookAsBookReserved(int bookId,BookCollection bookC) {
-        int index=bookId-1;
-        this.IdofBookReserved=(index);
-
-        bookC.books.get(index).setIsReserved(true);
-       HasReserved=true;
-   }
-
-    public boolean ReturnReservedBook() {
-        if(HasReserved){
+    public boolean ReturnReservedBook(BookCollection bookcollection) {
+        if(getHasReserved()){
             IdofBookReserved=0;
-            HasReserved=false;
-            return true;
+            HasReserved(false);
+            bookcollection.books.get(IdofBookReserved).reserve(false);  //returning the book reserved to bookcollection
+            return true;                                                  //as unreserved book.
         }
         else
             return false;
 
+    }
+
+    public void HasReserved(boolean b) {
+        HasReserved=b;
+    }
+
+    public boolean getHasReserved() {
+        return HasReserved;
     }
 }
